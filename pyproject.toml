@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "okr-app"
+version = "0.1.0"
+description = ""
+authors = ["Eduardo Rezaghi <58532229+eduardorezaghi@users.noreply.github.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+Django = "2.2"
+pylint = "^2.12.2"
+black = "^22.1.0"
+ipython = "^8.0.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
