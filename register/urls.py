@@ -4,5 +4,6 @@ from . import views
 app_name = 'register'
 
 urlpatterns = [
-    path('', views.index, name='index')
+    path('', views.index, name='index'),
+    path('okr-api/', views.OkrList.as_view())
 ]

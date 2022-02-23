@@ -9,7 +9,7 @@ class Integrante(models.Model):
         return self.nome
 
 class ObjectiveKeyResult(models.Model):
-    integrante = models.ForeignKey(Integrante, on_delete=models.CASCADE)
+    integrante = models.ForeignKey(Integrante, related_name='okrs', on_delete=models.CASCADE)
     objetivo = models.CharField(max_length=200)
     resultado_1 = models.CharField(max_length=300, null=False)
     resultado_2 = models.CharField(max_length=300, null=False, blank=True)

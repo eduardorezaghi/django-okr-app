@@ -6,6 +6,9 @@ from .models import Integrante, ObjectiveKeyResult
 
 from .forms import OkrForm
 
+from register.serializers import IntegranteSerializer, ObjectiveKeyResultSerializer
+from rest_framework import generics
+
 # Create your views here.
 def index(request):
     if request.method == 'POST':
@@ -19,3 +22,11 @@ def index(request):
         form = OkrForm()
 
     return render(request, 'register/form.html', {'form': form})
+
+
+class OkrList(generics.ListAPIView):
+    """
+    Rest API Class serializing a OKR to JSON format
+    """
+    queryset = ObjectiveKeyResult.objects.all()
+    serializer_class = ObjectiveKeyResultSerializer
