@@ -3,13 +3,25 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from .models import Integrante, ObjectiveKeyResult
+from django.contrib.auth.models import User
 
 from .forms import OkrForm
 
-from register.serializers import IntegranteSerializer, ObjectiveKeyResultSerializer
-from rest_framework import generics
+from .serializers import IntegranteSerializer, ObjectiveKeyResultSerializer, UserSerializer
+from rest_framework import viewsets
+from rest_framework import permissions
 
 # Create your views here.
+@api_view(['GET'])
+def api_root(request, format=None):
+    """
+    API root mapping view classes.
+    """
+    return Response({
+        'okrs': reverse('okrs', request=request, format=format),
+    })
+
+
 def index(request):
     if request.method == 'POST':
         form = OkrForm(request.POST)
@@ -23,10 +35,17 @@ def index(request):
 
     return render(request, 'register/form.html', {'form': form})
 
+class OkrViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions.
+    """
 
-class OkrList(generics.ListAPIView):
-    """
-    Rest API Class serializing a OKR to JSON format
-    """
     queryset = ObjectiveKeyResult.objects.all()
     serializer_class = ObjectiveKeyResultSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
+                          IsOwnerOrReadOnly]
+
+class UserViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
