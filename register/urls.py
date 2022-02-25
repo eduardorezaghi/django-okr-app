@@ -1,14 +1,18 @@
+"""
+App urls.py URLconf settings.
+"""
 from django.urls import path, include
-from register import views
 from rest_framework.routers import DefaultRouter
 
+from register import views
 
-app_name = 'register'
+
+APP_NAME = 'register'
 # Criando um roteador para realizar a configuração das URLS.
 router = DefaultRouter()
 
 # router.register(r'', views.index)
-router.register(r'okr-api', views.OkrViewSet)
+router.register(r'okr-list', views.OkrViewSet)
 router.register(r'okr-integrantes', views.IntegranteViewSet)
 
 urlpatterns = [

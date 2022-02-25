@@ -1,15 +1,18 @@
+"""
+Views implementing Model and Serializer logic for our API.
+"""
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib import messages
-from django.contrib.auth.models import User
+
+from rest_framework import viewsets
+from rest_framework import permissions
 
 from .forms import OkrForm
 from .models import Integrante, ObjectiveKeyResult
 from .permissions import IsOwnerOrReadOnly
-from .serializers import IntegranteSerializer, ObjectiveKeyResultSerializer, UserSerializer
+from .serializers import IntegranteSerializer, ObjectiveKeyResultSerializer
 
-from rest_framework import viewsets
-from rest_framework import permissions
 
 def index(request):
     """
@@ -30,15 +33,17 @@ def index(request):
 class OkrViewSet(viewsets.ModelViewSet):
     """
     This viewset automatically provides `list`, `create`, `retrieve`,
-    `update` and `destroy` actions.
+    `update` and `destroy` actions for a Okr resource.
     """
-
-    queryset = ObjectiveKeyResult.objects.all()
+    queryset = ObjectiveKeyResult.objects.all().order_by('integrante')
     serializer_class = ObjectiveKeyResultSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly]
 
 class IntegranteViewSet(viewsets.ReadOnlyModelViewSet):
-    
+    """
+    This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions for a Integrante resource.
+    """
     queryset = Integrante.objects.all()
     serializer_class = IntegranteSerializer
