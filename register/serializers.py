@@ -7,18 +7,18 @@ class IntegranteSerializer(serializers.ModelSerializer):
     """
     Serializer Class for Integrante Model, mapping each OKR.
     """
-    okrs = serializers.PrimaryKeyRelatedField(
-        many=True, queryset=ObjectiveKeyResult.objects.all())
+    okrs = serializers.StringRelatedField(many=True)
 
     class Meta:
         model = Integrante
-        fields = ['id', 'nome']
+        fields = ['id', 'nome', 'okrs']
 
 
 class ObjectiveKeyResultSerializer(serializers.ModelSerializer):
     """
     Serializer Class for ObjectiveKeyResult Model.
     """
+    integrante = serializers.ReadOnlyField(source='integrante.nome')
     class Meta:
         model = ObjectiveKeyResult
         fields = ['id', 'integrante', 'objetivo', 'resultado_1',
@@ -29,9 +29,6 @@ class UserSerializer(serializers.ModelSerializer):
     """
     Serializing an User Model from Django default auth system.
     """
-    okrs = serializers.PrimaryKeyRelatedField(
-        many=True, queryset=ObjectiveKeyResult.objects.all())
-
     class Meta:
         model = User
         fields = ['id', 'username', 'okrs']
