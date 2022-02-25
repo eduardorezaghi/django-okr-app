@@ -13,5 +13,4 @@ router.register(r'okr-api', OkrViewSet)
 urlpatterns = [
     path('', views.index, name='index'),
     path('', include(router.urls)),
-    # path('okr-api/', views.OkrViewSet.as_view())
 ]

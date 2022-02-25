@@ -1,26 +1,17 @@
-import json
+from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib import messages
-from .models import Integrante, ObjectiveKeyResult
-from django.contrib.auth.models import User
+
 
 from .forms import OkrForm
-
+from .permissions import IsOwnerOrReadOnly
 from .serializers import IntegranteSerializer, ObjectiveKeyResultSerializer, UserSerializer
+from .models import Integrante, ObjectiveKeyResult
+
 from rest_framework import viewsets
 from rest_framework import permissions
-
-# Create your views here.
-@api_view(['GET'])
-def api_root(request, format=None):
-    """
-    API root mapping view classes.
-    """
-    return Response({
-        'okrs': reverse('okrs', request=request, format=format),
-    })
-
+from rest_framework.decorators import api_view
 
 def index(request):
     if request.method == 'POST':
