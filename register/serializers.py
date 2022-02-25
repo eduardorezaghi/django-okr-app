@@ -18,7 +18,7 @@ class ObjectiveKeyResultSerializer(serializers.ModelSerializer):
     """
     Serializer Class for ObjectiveKeyResult Model.
     """
-    integrante = serializers.ReadOnlyField(source='integrante.nome')
+    integrante = serializers.CharField(source='integrante.nome')
     class Meta:
         model = ObjectiveKeyResult
         fields = ['id', 'integrante', 'objetivo', 'resultado_1',
