@@ -7,7 +7,7 @@ from django.contrib import messages
 
 from rest_framework import viewsets
 from rest_framework import permissions
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view
 
 from .forms import OkrForm
 from .models import Integrante, ObjectiveKeyResult

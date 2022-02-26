@@ -11,10 +11,11 @@ APP_NAME = 'register'
 # Criando um roteador para realizar a configuração das URLS.
 router = DefaultRouter()
 
-# router.register(r'', views.index)
+
 router.register(r'okr-list', views.OkrViewSet)
 router.register(r'okr-integrantes', views.IntegranteViewSet)
 
 urlpatterns = [
+    path('okrs/', views.index),
     path('', include(router.urls)),
 ]
