@@ -1,3 +1,15 @@
 {
-    "python.linting.enabled": true
-}
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
+    "python.linting.pylintUseMinimalCheckers": false,
+    "python.linting.pylintArgs": [
+      "--load-plugins",
+      "pylint_django",
+//    This line is project dependent. In this case, is: 
+//    - okr (project) / settings.py (django SETTINGS file)
+      "--django-settings-module=okr.settings",
+//    Disable "missing docstring" warning. In this personal project, 
+//    it's unnecessary.
+      "--disable=C0111"
+    ]
+  }
