@@ -7,13 +7,13 @@ from django.contrib import messages
 
 from rest_framework import viewsets
 from rest_framework import permissions
+from rest_framework.decorators import api_view, permission_classes
 
 from .forms import OkrForm
 from .models import Integrante, ObjectiveKeyResult
-from .permissions import IsOwnerOrReadOnly
 from .serializers import IntegranteSerializer, ObjectiveKeyResultSerializer
 
-
+@api_view(['GET', 'POST'])
 def index(request):
     """
     Index view-function dealing with template rendering
@@ -25,6 +25,7 @@ def index(request):
             intg = form.cleaned_data.get('integrante')
             messages.success(request, f"OKR criada para o integrante {intg}")
             return HttpResponseRedirect('/register/')
+        messages.error(request, "Dados inseridos são inválidos. Corrija-os e insira novamente!")
     else:
         form = OkrForm()
 
@@ -37,8 +38,7 @@ class OkrViewSet(viewsets.ModelViewSet):
     """
     queryset = ObjectiveKeyResult.objects.all().order_by('integrante')
     serializer_class = ObjectiveKeyResultSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
-                          IsOwnerOrReadOnly]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 class IntegranteViewSet(viewsets.ReadOnlyModelViewSet):
     """
