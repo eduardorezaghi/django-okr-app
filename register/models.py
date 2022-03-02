@@ -10,7 +10,7 @@ class Integrante(models.Model):
         return self.nome
 
 class ObjectiveKeyResult(models.Model):
-    text = RegexValidator(r'^[0-9a-zA-Z]*$', 'Só é permitido números e letras.')
+    text = RegexValidator(r'^[0-9a-z\w\-\_\s]*$', 'Só é permitido números e letras.')
 
     integrante = models.ForeignKey(Integrante, related_name='okrs', on_delete=models.CASCADE)
     objetivo = models.CharField(max_length=200, validators=[text])
